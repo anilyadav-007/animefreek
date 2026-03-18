@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANIMEBOX — Premium Anime Figures</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── HERO ── */
+.hero {
+  min-height: 92vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 6rem 5% 4rem;
+  position: relative; overflow: hidden;
+}
+.hero-bg-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,45,120,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,45,120,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.hero-glow1 { position:absolute; top:-20%; right:-10%; width:600px; height:600px; background:radial-gradient(circle, rgba(255,45,120,0.12) 0%, transparent 70%); pointer-events:none; }
+.hero-glow2 { position:absolute; bottom:-10%; left:-5%; width:500px; height:500px; background:radial-gradient(circle, rgba(0,245,255,0.08) 0%, transparent 70%); pointer-events:none; }
+
+.hero-content { position:relative; z-index:1; max-width:750px; }
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:0.6rem;
+  background:rgba(255,45,120,0.1); border:1px solid rgba(255,45,120,0.4);
+  border-radius:4px; padding:0.35rem 1rem; margin-bottom:1.5rem;
+  font-family:'Orbitron',monospace; font-size:0.72rem; font-weight:700;
+  color:var(--neon-pink); letter-spacing:0.12em;
+  box-shadow:0 0 12px rgba(255,45,120,0.2);
+}
+.blink { animation:blink 1s infinite; }
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+.hero h1 {
+  font-family:'Bangers',cursive;
+  font-size:clamp(4rem,8vw,7.5rem);
+  line-height:0.95; letter-spacing:0.04em;
+  margin-bottom:1.2rem;
+}
+.h1-line1 { display:block; color:var(--text); }
+.h1-line2 {
+  display:block;
+  background:linear-gradient(135deg, var(--neon-pink), var(--neon-cyan));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 20px rgba(255,45,120,0.4));
+}
+.h1-line3 { display:block; color:var(--neon-yellow); text-shadow:0 0 30px rgba(255,230,0,0.5); }
+
+.hero-sub {
+  font-size:1.05rem; color:var(--muted); max-width:520px;
+  line-height:1.75; margin-bottom:2.5rem;
+}
+.hero-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+.hero-btns .btn { font-size:1rem; padding:0.85rem 2.2rem; }
+
+.hero-stats { display:flex; gap:2.5rem; margin-top:3rem; flex-wrap:wrap; }
+.hstat { text-align:left; }
+.hstat h3 { font-family:'Orbitron',monospace; font-size:1.8rem; font-weight:900; color:var(--neon-cyan); text-shadow:0 0 16px rgba(0,245,255,0.5); }
+.hstat p { font-size:0.75rem; font-weight:700; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; }
+
+/* FLOATING FIGURES */
+.hero-figures {
+  position:absolute; right:3%; top:50%; transform:translateY(-50%);
+  display:flex; flex-direction:column; gap:1.2rem; z-index:1;
+}
+.hf-card {
+  background:rgba(26,0,48,0.8); backdrop-filter:blur(12px);
+  border:1px solid rgba(255,45,120,0.3); border-radius:12px;
+  padding:1rem 1.3rem; text-align:center;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  animation:float-card 3s ease-in-out infinite;
+}
+.hf-card:nth-child(2){animation-delay:.8s;}
+.hf-card:nth-child(3){animation-delay:1.6s;}
+@keyframes float-card{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.hf-card .fig { font-size:2.8rem; display:block; filter:drop-shadow(0 0 12px rgba(255,45,120,0.5)); }
+.hf-card .fig-name { font-family:'Orbitron',monospace; font-size:0.62rem; color:var(--neon-cyan); font-weight:700; margin-top:6px; letter-spacing:0.08em; }
+.hf-card .fig-price { font-family:'Orbitron',monospace; font-size:0.72rem; color:var(--neon-yellow); font-weight:700; margin-top:2px; }
+
+/* ── SERIES BAND ── */
+.series-band {
+  display:flex; gap:0.8rem; padding:1.5rem 5%;
+  overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  position:relative; z-index:1;
+}
+.series-band::-webkit-scrollbar{display:none;}
+.series-chip {
+  flex-shrink:0;
+  background:rgba(255,45,120,0.07); border:1px solid rgba(255,45,120,0.25);
+  border-radius:6px; padding:0.5rem 1.2rem;
+  font-weight:800; font-size:0.82rem; cursor:pointer;
+  transition:all 0.2s; display:flex; align-items:center; gap:0.5rem;
+  text-decoration:none; color:var(--muted);
+  font-family:'M PLUS Rounded 1c',sans-serif;
+  letter-spacing:0.04em;
+}
+.series-chip:hover {
+  background:rgba(255,45,120,0.15); color:var(--neon-pink);
+  border-color:var(--neon-pink); box-shadow:0 0 16px rgba(255,45,120,0.2);
+}
+
+/* ── PROMO TILES ── */
+.promo-row { display:grid; grid-template-columns:3fr 2fr; gap:1.2rem; margin:0 5% 4rem; }
+.promo-tile {
+  border-radius:14px; padding:2.2rem;
+  position:relative; overflow:hidden; cursor:pointer;
+  transition:transform 0.2s; border:1px solid;
+}
+.promo-tile:hover { transform:translateY(-4px); }
+.pt-main {
+  background:linear-gradient(135deg, #1a0030, #0d001a);
+  border-color:rgba(255,45,120,0.5);
+  box-shadow:0 0 30px rgba(255,45,120,0.15);
+}
+.pt-sub {
+  background:linear-gradient(135deg, #001a2e, #00080f);
+  border-color:rgba(0,245,255,0.3);
+  box-shadow:0 0 20px rgba(0,245,255,0.1);
+}
+.pt-bg { position:absolute; right:1rem; top:50%; transform:translateY(-50%); font-size:6rem; opacity:0.1; animation:spin-slow 20s linear infinite; }
+@keyframes spin-slow{to{transform:translateY(-50%) rotate(360deg);}}
+.promo-tile h2 { font-family:'Bangers',cursive; font-size:2rem; letter-spacing:0.06em; margin-bottom:0.4rem; }
+.pt-main h2 { color:var(--neon-pink); text-shadow:0 0 20px rgba(255,45,120,0.5); }
+.pt-sub h2 { color:var(--neon-cyan); text-shadow:0 0 20px rgba(0,245,255,0.5); }
+.promo-tile p { font-size:0.88rem; color:var(--muted); margin-bottom:1.2rem; }
+
+/* ── TESTIMONIALS ── */
+.testi-section { background:linear-gradient(135deg,#0d0018,#0a0010); border-top:1px solid rgba(255,45,120,0.15); padding:5rem 5%; }
+.testi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.3rem; margin-top:2.5rem; }
+.testi-card {
+  background:rgba(26,0,48,0.6); backdrop-filter:blur(8px);
+  border:1px solid rgba(255,45,120,0.15); border-radius:12px; padding:1.5rem;
+  transition:border-color 0.2s;
+}
+.testi-card:hover { border-color:rgba(255,45,120,0.4); box-shadow:0 0 20px rgba(255,45,120,0.1); }
+.testi-stars { color:var(--gold); font-size:0.88rem; margin-bottom:0.8rem; }
+.testi-text { color:var(--muted); font-size:0.88rem; line-height:1.7; margin-bottom:1rem; font-style:italic; }
+.testi-author { display:flex; align-items:center; gap:0.8rem; }
+.tav { font-size:2rem; }
+.tinfo h5 { font-weight:800; font-size:0.88rem; color:var(--text); }
+.tinfo p { font-size:0.73rem; color:var(--neon-cyan); font-family:'Orbitron',monospace; }
+
+/* ── NEWSLETTER ── */
+.newsletter {
+  margin:4rem 5%;
+  background:linear-gradient(135deg, rgba(255,45,120,0.1), rgba(0,245,255,0.05));
+  border:1px solid rgba(255,45,120,0.35);
+  border-radius:14px; padding:3rem;
+  box-shadow:0 0 40px rgba(255,45,120,0.1);
+  display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap;
+  position:relative; z-index:1; overflow:hidden;
+}
+.newsletter::before { content:'🌸'; position:absolute; right:2rem; top:50%; transform:translateY(-50%); font-size:6rem; opacity:0.06; }
+.nl-text h2 { font-family:'Bangers',cursive; font-size:2rem; letter-spacing:0.06em; color:var(--neon-pink); text-shadow:0 0 20px rgba(255,45,120,0.4); }
+.nl-text p { color:var(--muted); font-size:0.88rem; margin-top:4px; }
+.nl-form { display:flex; gap:0.7rem; flex-wrap:wrap; }
+.nl-input {
+  padding:0.75rem 1.2rem; border-radius:6px;
+  border:1px solid rgba(255,45,120,0.4);
+  background:rgba(255,45,120,0.05); color:var(--text);
+  font-family:'M PLUS Rounded 1c',sans-serif; font-weight:700; font-size:0.88rem;
+  outline:none; min-width:220px;
+}
+.nl-input:focus { border-color:var(--neon-pink); box-shadow:0 0 12px rgba(255,45,120,0.3); }
+.nl-input::placeholder { color:rgba(255,45,120,0.4); }
+
+@media(max-width:900px){
+  .hero-figures{display:none;}
+  .promo-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div id="cursor"></div><div id="cursor-trail"></div>
+<div id="site-header"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-glow1"></div>
+  <div class="hero-glow2"></div>
+  <div class="sakura-wrap" id="sakura-hero"></div>
+
+  <div class="hero-content reveal-left">
+    <div class="hero-eyebrow"><span class="blink">●</span> JAPAN AUTHENTIC · FREE SHIPPING OVER ₹1999</div>
+    <h1>
+      <span class="h1-line1">COLLECT THE</span>
+      <span class="h1-line2 glitch" data-text="LEGENDS">LEGENDS</span>
+      <span class="h1-line3">OF ANIME</span>
+    </h1>
+    <p class="hero-sub">Premium PVC statues, action figures, mecha kits, nendoroids & dioramas from every iconic series. Hand-painted. Limited editions. Collector-grade quality.</p>
+    <div class="hero-btns">
+      <a href="shop.html" class="btn btn-neon" style="font-size:1rem;padding:0.85rem 2rem;">⚔️ Shop Figures</a>
+      <a href="collections.html" class="btn btn-cyan" style="font-size:1rem;padding:0.85rem 2rem;">🗂️ Collections</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><h3>500+</h3><p>Figures</p></div>
+      <div class="hstat"><h3>50+</h3><p>Series</p></div>
+      <div class="hstat"><h3>18K+</h3><p>Collectors</p></div>
+      <div class="hstat"><h3>4.9★</h3><p>Rating</p></div>
+    </div>
+  </div>
+
+  <!-- FLOATING CARDS -->
+  <div class="hero-figures reveal-right">
+    <div class="hf-card"><span class="fig">⚔️</span><div class="fig-name">TANJIRO</div><div class="fig-price">¥2,499</div></div>
+    <div class="hf-card"><span class="fig">💗</span><div class="fig-name">ZERO TWO</div><div class="fig-price">¥5,999</div></div>
+    <div class="hf-card"><span class="fig">🤖</span><div class="fig-name">RX-78-2</div><div class="fig-price">¥4,499</div></div>
+  </div>
+</section>
+
+<!-- SERIES BAND -->
+<div class="series-band reveal">
+  <a href="shop.html?cat=action" class="series-chip">⚔️ Action Figures</a>
+  <a href="shop.html?cat=statue" class="series-chip">💗 Statues</a>
+  <a href="shop.html?cat=mecha" class="series-chip">🤖 Mecha / Gundam</a>
+  <a href="shop.html?cat=chibi" class="series-chip">⚡ Nendoroids</a>
+  <a href="shop.html?cat=diorama" class="series-chip">🏮 Dioramas</a>
+  <a href="shop.html?cat=plush" class="series-chip">🎤 Plush</a>
+  <a href="shop.html?cat=garage" class="series-chip">⛓️ Garage Kits</a>
+  <a href="deals.html" class="series-chip" style="color:var(--neon-pink);border-color:rgba(255,45,120,0.5);">🔥 Deals</a>
+</div>
+
+<!-- PROMO TILES -->
+<div class="promo-row reveal">
+  <div class="promo-tile pt-main" onclick="location.href='deals.html'">
+    <div class="pt-bg">⚡</div>
+    <h2>🔥 Limited Drops — Up to 40% OFF</h2>
+    <p>Exclusive weekend flash sale on statues & mecha kits. No code needed.</p>
+    <a href="deals.html" class="btn btn-neon">View Deals →</a>
+  </div>
+  <div class="promo-tile pt-sub" onclick="location.href='shop.html'">
+    <div class="pt-bg">🌸</div>
+    <h2>✨ New Season Arrivals</h2>
+    <p>Spring 2026 figures just landed from Japan.</p>
+    <a href="shop.html" class="btn btn-cyan" style="margin-top:0.5rem;">Shop New →</a>
+  </div>
+</div>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-title">🏆 Fan Favourites <span class="glow-line"></span></div>
+    <a href="shop.html" class="see-all">See All →</a>
+  </div>
+  <div class="products-grid" id="featured-grid"></div>
+</section>
+
+<hr class="neon-divider">
+
+<!-- FEATURES -->
+<div class="features-strip">
+  <div class="feat-item reveal"><div class="feat-icon">✈️</div><div class="feat-text"><h4>Free Shipping</h4><p>Orders above ₹1,999</p></div></div>
+  <div class="feat-item reveal"><div class="feat-icon">🔒</div><div class="feat-text"><h4>Secure & Safe</h4><p>SSL encrypted checkout</p></div></div>
+  <div class="feat-item reveal"><div class="feat-icon">🔄</div><div class="feat-text"><h4>30-Day Returns</h4><p>Hassle-free guarantee</p></div></div>
+  <div class="feat-item reveal"><div class="feat-icon">🎁</div><div class="feat-text"><h4>Gift Wrap Free</h4><p>Premium anime box wrap</p></div></div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section">
+  <div class="section-title reveal">💬 Collector Reviews <span class="glow-line"></span></div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The Zero Two statue is absolutely breathtaking. The holographic eyes, the LED base — worth every rupee. It took 15 minutes just to open the packaging!"</p>
+      <div class="testi-author"><div class="tav">👦</div><div class="tinfo"><h5>Karan Mehta</h5><p>MUMBAI · COLLECTOR LVL 9</p></div></div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The RX-78-2 MG kit was my first Gunpla and the instructions were perfect. 4 days to build, absolutely stunning result. AnimeBox quality checks are top tier."</p>
+      <div class="testi-author"><div class="tav">👧</div><div class="tinfo"><h5>Anika Sharma</h5><p>DELHI · MECHA BUILDER</p></div></div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Goku Ultra Instinct figure glows in the dark and the detail on the aura effect is insane. Delivery was in 3 days, packaged like a treasure chest. 10/10!"</p>
+      <div class="testi-author"><div class="tav">🧑</div><div class="tinfo"><h5>Rohit Iyer</h5><p>BANGALORE · SHONEN FAN</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter reveal">
+  <div class="nl-text">
+    <h2>🌸 Get Drop Alerts</h2>
+    <p>Be first for limited editions, restocks & secret sales.</p>
+  </div>
+  <div class="nl-form">
+    <input class="nl-input" type="email" placeholder="your@email.com">
+    <button class="btn btn-neon" onclick="showToast('🌸 Subscribed! Watch your inbox!')">Subscribe</button>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<div id="toast"></div>
+<script src="app.js"></script>
+<script>
+window.PAGE_ID = 'index.html';
+document.addEventListener('DOMContentLoaded',()=>{
+  const best = [...PRODUCTS].sort((a,b)=>b.reviews-a.reviews).slice(0,8);
+  document.getElementById('featured-grid').innerHTML = best.map(productCard).join('');
+  initReveal();
+  initSakura(document.getElementById('sakura-hero'));
+});
+</script>
+</body>
+</html>
