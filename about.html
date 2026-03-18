@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — ANIMEBOX</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.about-hero{display:grid;grid-template-columns:1fr 1fr;gap:4rem;padding:6rem 5% 5rem;align-items:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#0d0020,#0a0010);}
+.about-hero::before{content:'';position:absolute;right:-80px;top:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,45,120,0.1) 0%,transparent 70%);pointer-events:none;}
+.ah-text{z-index:1;}
+.ah-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,45,120,0.1);border:1px solid rgba(255,45,120,0.35);border-radius:4px;color:var(--neon-pink);font-family:'Orbitron',monospace;font-size:0.7rem;font-weight:700;padding:0.3rem 1rem;margin-bottom:1.3rem;letter-spacing:0.1em;box-shadow:0 0 12px rgba(255,45,120,0.15);}
+.ah-text h1{font-family:'Bangers',cursive;font-size:3.5rem;letter-spacing:0.05em;line-height:1.05;margin-bottom:1rem;}
+.ah-text h1 .g1{background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.ah-text h1 .g2{color:var(--neon-cyan);text-shadow:0 0 20px rgba(0,245,255,0.4);}
+.ah-text p{color:var(--muted);font-size:0.95rem;line-height:1.8;max-width:460px;}
+.ah-visual{display:flex;align-items:center;justify-content:center;z-index:1;}
+.orbit-rig{width:300px;height:300px;position:relative;display:flex;align-items:center;justify-content:center;}
+.orbit-ring{position:absolute;border:1px dashed rgba(255,45,120,0.2);border-radius:50%;animation:orbit-spin 20s linear infinite;}
+.orbit-ring.r1{width:100%;height:100%;}
+.orbit-ring.r2{width:70%;height:70%;animation-direction:reverse;animation-duration:14s;border-color:rgba(0,245,255,0.15);}
+@keyframes orbit-spin{to{transform:rotate(360deg);}}
+.orb-dot{position:absolute;font-size:1.8rem;animation:counter-orbit 20s linear infinite;}
+.orb-dot.d1{top:-16px;left:50%;transform:translateX(-50%);}
+.orb-dot.d2{right:-16px;top:50%;transform:translateY(-50%);}
+.orb-dot.d3{bottom:-16px;left:50%;transform:translateX(-50%);}
+.orb-dot.d4{left:-16px;top:50%;transform:translateY(-50%);}
+@keyframes counter-orbit{to{transform:rotate(-360deg);}}
+.orbit-center{font-size:5rem;filter:drop-shadow(0 0 20px rgba(255,45,120,0.5));animation:pulse-center 3s ease-in-out infinite;}
+@keyframes pulse-center{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;padding:3rem 5%;background:rgba(13,0,24,0.8);border-bottom:1px solid rgba(255,45,120,0.15);}
+.stat-box{text-align:center;background:rgba(26,0,48,0.6);border:1px solid rgba(255,45,120,0.15);border-radius:12px;padding:1.5rem;transition:border-color 0.2s,box-shadow 0.2s;}
+.stat-box:hover{border-color:rgba(255,45,120,0.4);box-shadow:0 0 20px rgba(255,45,120,0.1);}
+.stat-box h3{font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;color:var(--neon-pink);text-shadow:0 0 16px rgba(255,45,120,0.4);}
+.stat-box p{font-size:0.72rem;font-weight:700;color:var(--muted);margin-top:4px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Orbitron',monospace;}
+
+.story-section{display:grid;grid-template-columns:1fr 1fr;gap:4rem;padding:5rem 5%;align-items:center;position:relative;z-index:1;}
+.story-text h2{font-family:'Bangers',cursive;font-size:2.5rem;letter-spacing:0.05em;margin-bottom:1rem;color:var(--text);}
+.story-text p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:1rem;}
+.figure-showcase{background:rgba(26,0,48,0.7);border:1px solid rgba(255,45,120,0.2);border-radius:16px;padding:2rem;box-shadow:0 0 40px rgba(255,45,120,0.1);}
+.fig-grid{display:flex;flex-wrap:wrap;gap:0.8rem;justify-content:center;}
+.fig-chip{background:rgba(255,45,120,0.07);border:1px solid rgba(255,45,120,0.2);border-radius:8px;padding:0.8rem 1rem;text-align:center;transition:all 0.2s;cursor:default;}
+.fig-chip:hover{background:rgba(255,45,120,0.15);border-color:rgba(255,45,120,0.4);transform:translateY(-3px);}
+.fig-chip span:first-child{font-size:2rem;display:block;}
+.fig-chip span:last-child{font-size:0.62rem;color:var(--neon-cyan);font-weight:700;letter-spacing:0.08em;font-family:'Orbitron',monospace;}
+
+.team-section{background:linear-gradient(135deg,#0d0020,#0a0010);border-top:1px solid rgba(255,45,120,0.15);border-bottom:1px solid rgba(255,45,120,0.15);padding:5rem 5%;}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.3rem;margin-top:2.5rem;}
+.team-card{background:rgba(26,0,48,0.5);border:1px solid rgba(255,45,120,0.1);border-radius:14px;padding:2rem 1.4rem;text-align:center;transition:all 0.2s;}
+.team-card:hover{border-color:rgba(255,45,120,0.35);transform:translateY(-4px);box-shadow:0 12px 32px rgba(255,45,120,0.1);}
+.team-avatar{font-size:3.5rem;margin-bottom:0.8rem;}
+.team-card h3{font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:0.05em;color:var(--text);}
+.team-role{font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--neon-pink);font-weight:700;margin-top:4px;}
+.team-card p{font-size:0.8rem;color:var(--muted);line-height:1.65;margin-top:0.8rem;}
+
+.values-section{padding:5rem 5%;position:relative;z-index:1;}
+.values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.3rem;}
+.value-card{background:rgba(26,0,48,0.5);border:1px solid rgba(255,45,120,0.12);border-radius:12px;padding:1.8rem;transition:all 0.2s;}
+.value-card:hover{border-color:rgba(255,45,120,0.35);box-shadow:0 0 20px rgba(255,45,120,0.1);transform:translateY(-3px);}
+.vi-icon{font-size:2.5rem;margin-bottom:0.8rem;}
+.value-card h3{font-family:'Bangers',cursive;font-size:1.2rem;letter-spacing:0.05em;margin-bottom:0.5rem;}
+.value-card p{font-size:0.82rem;color:var(--muted);line-height:1.65;}
+
+.faq-section{padding:5rem 5%;background:linear-gradient(135deg,#0d0020,#0a0010);position:relative;z-index:1;}
+.faq-list{max-width:700px;}
+.faq-item{border:1px solid rgba(255,45,120,0.15);border-radius:10px;background:rgba(26,0,48,0.5);overflow:hidden;margin-bottom:0.8rem;transition:border-color 0.2s;}
+.faq-item:hover{border-color:rgba(255,45,120,0.3);}
+.faq-q{padding:1rem 1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:0.9rem;color:var(--text);}
+.faq-q:hover{color:var(--neon-pink);}
+.faq-ch{font-size:1rem;transition:transform 0.2s;color:var(--neon-pink);}
+.faq-item.open .faq-ch{transform:rotate(180deg);}
+.faq-a{display:none;padding:0 1.3rem 1rem;font-size:0.85rem;color:var(--muted);line-height:1.7;}
+.faq-item.open .faq-a{display:block;}
+
+.contact-strip{background:linear-gradient(135deg,rgba(255,45,120,0.1),rgba(191,90,242,0.07));border:1px solid rgba(255,45,120,0.3);margin:0 5% 4rem;border-radius:14px;padding:2.5rem;box-shadow:0 0 30px rgba(255,45,120,0.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;position:relative;z-index:1;}
+.contact-strip h2{font-family:'Bangers',cursive;font-size:2rem;letter-spacing:0.06em;color:var(--text);}
+.contact-strip p{color:var(--muted);font-size:0.85rem;margin-top:4px;}
+.contact-methods{display:flex;gap:0.8rem;flex-wrap:wrap;}
+.cm{background:rgba(255,45,120,0.08);border:1px solid rgba(255,45,120,0.25);border-radius:8px;padding:0.6rem 1.1rem;font-weight:800;font-size:0.82rem;cursor:pointer;color:var(--neon-pink);transition:all 0.2s;font-family:'M PLUS Rounded 1c',sans-serif;}
+.cm:hover{background:rgba(255,45,120,0.18);box-shadow:0 0 12px rgba(255,45,120,0.3);}
+
+@media(max-width:900px){.about-hero,.story-section{grid-template-columns:1fr;}.ah-visual{display:none;}.stats-row{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div id="cursor"></div><div id="cursor-trail"></div>
+<div id="site-header"></div>
+
+<div class="about-hero">
+  <div class="ah-text reveal-left">
+    <div class="ah-badge"><span class="blink">●</span> EST. 2019 · HYDERABAD OTAKU HQ</div>
+    <h1>Born From<br><span class="g1">Passion.</span><br><span class="g2">Built for Collectors.</span></h1>
+    <p>We started AnimeBox because we couldn't find a trustworthy Indian store for authentic anime figures. Today we're the #1 premium anime collectibles destination, trusted by 18,000+ collectors across India.</p>
+  </div>
+  <div class="ah-visual reveal-right">
+    <div class="orbit-rig">
+      <div class="orbit-ring r1">
+        <span class="orb-dot d1">⚔️</span>
+        <span class="orb-dot d2">🤖</span>
+        <span class="orb-dot d3">💗</span>
+        <span class="orb-dot d4">⚡</span>
+      </div>
+      <div class="orbit-ring r2"></div>
+      <span class="orbit-center">⛩️</span>
+    </div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-box reveal"><h3>500+</h3><p>Figures Stocked</p></div>
+  <div class="stat-box reveal"><h3>18K+</h3><p>Collectors</p></div>
+  <div class="stat-box reveal"><h3>4.9★</h3><p>Avg Rating</p></div>
+  <div class="stat-box reveal"><h3>50+</h3><p>Anime Series</p></div>
+</div>
+
+<div class="story-section">
+  <div class="story-text reveal-left">
+    <h2>🌸 Our Story</h2>
+    <p>It started in 2019 when our founder Arjun, a lifelong Gundam builder and shonen fan, got burned by a fake Zero Two statue he ordered from an overseas reseller. ₹6,000 wasted on a terrible knockoff.</p>
+    <p>He spent 6 months building direct relationships with licensed manufacturers in Japan, Bandai distributors, and certified PVC suppliers — then opened AnimeBox with 30 authentic figures.</p>
+    <p>Today we carry 500+ figures, ship to every Indian state, and employ a team of fellow otaku who inspect every single figure before it leaves our warehouse.</p>
+    <a href="shop.html" class="btn btn-neon" style="margin-top:1rem;">Explore Figures →</a>
+  </div>
+  <div class="figure-showcase reveal-right">
+    <div class="fig-grid">
+      <div class="fig-chip"><span>⚔️</span><span>ACTION</span></div>
+      <div class="fig-chip"><span>💗</span><span>STATUE</span></div>
+      <div class="fig-chip"><span>🤖</span><span>MECHA</span></div>
+      <div class="fig-chip"><span>⚡</span><span>CHIBI</span></div>
+      <div class="fig-chip"><span>🏮</span><span>DIORAMA</span></div>
+      <div class="fig-chip"><span>🎤</span><span>PLUSH</span></div>
+      <div class="fig-chip"><span>⛓️</span><span>GARAGE</span></div>
+      <div class="fig-chip"><span>🌸</span><span>LIMITED</span></div>
+      <div class="fig-chip"><span>🏆</span><span>RARE</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="values-section" style="background:rgba(13,0,24,0.5);">
+  <div class="section-header reveal"><div class="section-title">💡 Our Values <span class="glow-line"></span></div></div>
+  <div class="values-grid">
+    <div class="value-card reveal"><div class="vi-icon">🔐</div><h3>100% Authentic</h3><p>Every figure is sourced from licensed manufacturers. Holographic authenticity sticker on every box.</p></div>
+    <div class="value-card reveal"><div class="vi-icon">🎯</div><h3>Otaku-Curated</h3><p>Our team are collectors first. Every product decision is made by fans who actually collect these figures.</p></div>
+    <div class="value-card reveal"><div class="vi-icon">💰</div><h3>Fair Pricing</h3><p>Direct partnerships with Japanese distributors means better prices than resellers charging a 200% markup.</p></div>
+    <div class="value-card reveal"><div class="vi-icon">🌸</div><h3>Community</h3><p>We run AnimeBox Collector Club with monthly drops, Discord, and exclusive early access for members.</p></div>
+  </div>
+</div>
+
+<section class="team-section">
+  <div class="section-title reveal">👥 The Otaku Team <span class="glow-line" style="background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink),transparent);"></span></div>
+  <div class="team-grid">
+    <div class="team-card reveal"><div class="team-avatar">🧑‍💻</div><h3>Arjun Kapoor</h3><div class="team-role">FOUNDER & CEO</div><p>300+ figures in his collection. Gundam builder since age 12. The reason AnimeBox exists.</p></div>
+    <div class="team-card reveal"><div class="team-avatar">👩‍🎨</div><h3>Priya Nair</h3><div class="team-role">HEAD OF DESIGN</div><p>Illustrator & statue collector. Handles our packaging, website, and creative direction.</p></div>
+    <div class="team-card reveal"><div class="team-avatar">👨‍🔬</div><h3>Dev Sharma</h3><div class="team-role">QUALITY CONTROL</div><p>Former factory QC inspector from Pune. Personally examines every figure we ship.</p></div>
+    <div class="team-card reveal"><div class="team-avatar">👩‍💼</div><h3>Ananya Iyer</h3><div class="team-role">COMMUNITY MANAGER</div><p>Runs our 5,000-member Discord. Shonen fan. Tanjiro figure on her desk at all times.</p></div>
+  </div>
+</section>
+
+<div class="faq-section">
+  <div class="section-header reveal"><div class="section-title">❓ FAQ <span class="glow-line"></span></div></div>
+  <div class="faq-list">
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">Are your figures authentic / licensed? <span class="faq-ch">▼</span></div><div class="faq-a">100% yes. Every figure includes a holographic authenticity sticker. We source exclusively from licensed manufacturers and authorised Bandai/Good Smile distributors. Bootlegs are never stocked.</div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">How is packaging handled? <span class="faq-ch">▼</span></div><div class="faq-a">We use double-boxed shipping with custom foam inserts. The collector box is never exposed. For large statues, we use professional art transport cases with corner bracing.</div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">What is the return policy? <span class="faq-ch">▼</span></div><div class="faq-a">30-day hassle-free returns. If your figure arrives damaged or misrepresented, we'll replace it or give a full refund. We've never refused a valid claim.</div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">Do you do limited edition pre-orders? <span class="faq-ch">▼</span></div><div class="faq-a">Yes! Join our Collector Club on Discord for first access to limited edition pre-orders, including exclusive colourways that sell out within hours.</div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">Are garage kits suitable for beginners? <span class="faq-ch">▼</span></div><div class="faq-a">Garage kits vary — we rate each as beginner, intermediate, or expert. Beginner kits come with a painting guide. We also stock pre-assembled premium resin figures if you prefer display-ready items.</div></div>
+  </div>
+</div>
+
+<div class="contact-strip reveal">
+  <div><h2>💬 Talk to a Collector</h2><p>Our team answers within 2 hours, Mon–Sat 10am–8pm IST.</p></div>
+  <div class="contact-methods">
+    <span class="cm" onclick="showToast('📞 +91 98765 11111')">📞 Call</span>
+    <span class="cm" onclick="showToast('📧 hello@animebox.in')">📧 Email</span>
+    <span class="cm" onclick="showToast('💬 Discord: discord.gg/animebox')">💬 Discord</span>
+  </div>
+</div>
+
+<div class="features-strip">
+  <div class="feat-item"><div class="feat-icon">✈️</div><div class="feat-text"><h4>Free Shipping</h4><p>Orders above ₹1,999</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🔒</div><div class="feat-text"><h4>Secure Checkout</h4><p>SSL encrypted</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🔄</div><div class="feat-text"><h4>30-Day Returns</h4><p>Hassle-free policy</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🎁</div><div class="feat-text"><h4>Gift Wrap Free</h4><p>On any order</p></div></div>
+</div>
+
+<div id="site-footer"></div>
+<div id="toast"></div>
+<script src="app.js"></script>
+<script>
+window.PAGE_ID='about.html';
+function toggleFaq(el){el.closest('.faq-item').classList.toggle('open');}
+const blink=document.querySelector('.blink');
+</script>
+</body>
+</html>
