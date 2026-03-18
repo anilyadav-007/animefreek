@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collections — ANIMEBOX</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.col-hero{padding:4rem 5% 3rem;background:linear-gradient(135deg,#0d0020,#0a0010);border-bottom:1px solid rgba(255,45,120,0.2);position:relative;overflow:hidden;}
+.col-hero::after{content:'⚔️💗🤖⚡🏮🎤';position:absolute;right:3%;top:50%;transform:translateY(-50%);font-size:3.5rem;letter-spacing:0.7rem;opacity:0.06;}
+.col-hero h1{font-family:'Bangers',cursive;font-size:3rem;letter-spacing:0.06em;color:var(--text);}
+.col-hero h1 span{background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.col-hero p{color:var(--muted);font-size:0.9rem;margin-top:0.4rem;}
+
+.cat-hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;padding:3rem 5% 0;position:relative;z-index:1;}
+.cat-big-card{border-radius:14px;overflow:hidden;cursor:pointer;transition:transform 0.25s,box-shadow 0.25s;position:relative;min-height:210px;display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem;text-decoration:none;border:1px solid;}
+.cat-big-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.5);}
+.cat-big-card .big-em{position:absolute;top:50%;right:1.5rem;transform:translateY(-65%);font-size:5.5rem;animation:float-emoji 6s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,45,120,0.3));}
+@keyframes float-emoji{0%,100%{transform:translateY(-65%);}50%{transform:translateY(-80%);}}
+.cat-big-card h3{font-family:'Bangers',cursive;font-size:1.7rem;letter-spacing:0.05em;color:#fff;text-shadow:0 0 20px rgba(255,45,120,0.4);position:relative;z-index:1;}
+.cat-big-card p{font-size:0.8rem;color:rgba(255,255,255,0.65);font-weight:700;margin-top:4px;position:relative;z-index:1;}
+.cat-big-card .cbadge{display:inline-flex;align-items:center;background:rgba(0,0,0,0.3);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.2);border-radius:4px;padding:2px 10px;font-size:0.68rem;color:rgba(255,255,255,0.8);font-weight:800;margin-top:8px;font-family:'Orbitron',monospace;letter-spacing:0.06em;width:fit-content;position:relative;z-index:1;}
+.cc-action{background:linear-gradient(135deg,#1a0010,#2d0020);border-color:rgba(255,45,120,0.4);box-shadow:0 0 30px rgba(255,45,120,0.15);}
+.cc-statue{background:linear-gradient(135deg,#000d1a,#001529);border-color:rgba(0,245,255,0.3);box-shadow:0 0 20px rgba(0,245,255,0.1);}
+.cc-mecha{background:linear-gradient(135deg,#0d001a,#180028);border-color:rgba(191,90,242,0.3);box-shadow:0 0 20px rgba(191,90,242,0.1);}
+.cc-chibi{background:linear-gradient(135deg,#1a1000,#0d0900);border-color:rgba(255,215,0,0.3);box-shadow:0 0 20px rgba(255,215,0,0.1);}
+.cc-diorama{background:linear-gradient(135deg,#001a0d,#000f06);border-color:rgba(57,255,20,0.25);}
+.cc-plush{background:linear-gradient(135deg,#1a0018,#0d000f);border-color:rgba(255,45,120,0.3);}
+
+.col-section{padding:3rem 5% 1rem;position:relative;z-index:1;}
+.col-sec-header{display:flex;align-items:center;gap:1.2rem;padding:1.2rem 2rem;margin-bottom:2rem;border-radius:10px;border:1px solid;}
+.csh-icon{font-size:2rem;}
+.csh-text h2{font-family:'Bangers',cursive;font-size:1.7rem;letter-spacing:0.05em;color:var(--text);}
+.csh-text p{font-size:0.78rem;color:var(--muted);}
+.csh-link{margin-left:auto;}
+
+.gift-section{padding:3rem 5% 2rem;position:relative;z-index:1;}
+.gift-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.3rem;}
+.gift-card{background:rgba(26,0,48,0.6);border:1px solid rgba(255,45,120,0.2);border-radius:14px;padding:2rem;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;}
+.gift-card:hover{border-color:var(--neon-pink);transform:translateY(-4px);box-shadow:0 16px 40px rgba(255,45,120,0.2);}
+.gift-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.g-pink::before{background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple));}
+.g-cyan::before{background:linear-gradient(90deg,var(--neon-cyan),var(--blue));}
+.g-gold::before{background:linear-gradient(90deg,var(--gold),var(--neon-yellow));}
+.gift-emoji{font-size:3rem;margin-bottom:1rem;display:block;}
+.gift-card h3{font-family:'Bangers',cursive;font-size:1.4rem;letter-spacing:0.05em;margin-bottom:0.4rem;}
+.gift-card p{font-size:0.83rem;color:var(--muted);margin-bottom:1rem;line-height:1.6;}
+.gift-price{font-family:'Orbitron',monospace;font-size:1.5rem;font-weight:700;color:var(--neon-yellow);margin-bottom:1rem;}
+.gift-tags{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1rem;}
+.gtag{background:rgba(0,245,255,0.07);border:1px solid rgba(0,245,255,0.2);border-radius:4px;padding:2px 8px;font-size:0.7rem;font-weight:700;color:var(--neon-cyan);font-family:'Orbitron',monospace;}
+
+@media(max-width:900px){.cat-hero-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.cat-hero-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="cursor"></div><div id="cursor-trail"></div>
+<div id="site-header"></div>
+
+<div class="col-hero">
+  <h1>🗂️ <span>Collections</span></h1>
+  <p>Browse all categories — from battle-ready action figures to serene dioramas</p>
+</div>
+
+<div class="cat-hero-grid">
+  <a class="cat-big-card cc-action reveal" href="shop.html?cat=action"><span class="big-em">⚔️</span><h3>Action Figures</h3><p>Battle poses, articulated joints</p><span class="cbadge">6 FIGURES</span></a>
+  <a class="cat-big-card cc-statue reveal" href="shop.html?cat=statue"><span class="big-em">💗</span><h3>Statues</h3><p>Premium sculpts, scale masterpieces</p><span class="cbadge">4 FIGURES</span></a>
+  <a class="cat-big-card cc-mecha reveal" href="shop.html?cat=mecha"><span class="big-em">🤖</span><h3>Mecha / Gundam</h3><p>Kits, inner frames, weapons</p><span class="cbadge">3 KITS</span></a>
+  <a class="cat-big-card cc-chibi reveal" href="shop.html?cat=chibi"><span class="big-em">⚡</span><h3>Chibi / Nendo</h3><p>Adorable face-plate figures</p><span class="cbadge">3 FIGURES</span></a>
+  <a class="cat-big-card cc-diorama reveal" href="shop.html?cat=diorama"><span class="big-em">🏮</span><h3>Dioramas</h3><p>Scene displays with LED</p><span class="cbadge">2 SETS</span></a>
+  <a class="cat-big-card cc-plush reveal" href="shop.html?cat=plush"><span class="big-em">🎤</span><h3>Plush & Soft</h3><p>Huggable character plushies</p><span class="cbadge">3 PLUSH</span></a>
+</div>
+
+<!-- EACH CATEGORY -->
+<div class="col-section" id="action">
+  <div class="col-sec-header reveal" style="background:rgba(255,45,120,0.07);border-color:rgba(255,45,120,0.3);">
+    <span class="csh-icon">⚔️</span>
+    <div class="csh-text"><h2>Action Figures</h2><p>Articulated, dynamic, battle-ready figures from top shonen series</p></div>
+    <a href="shop.html?cat=action" class="btn btn-neon csh-link">Shop All →</a>
+  </div>
+  <div class="products-grid" id="action-grid"></div>
+</div>
+
+<div class="col-section" id="statue">
+  <div class="col-sec-header reveal" style="background:rgba(0,245,255,0.05);border-color:rgba(0,245,255,0.25);">
+    <span class="csh-icon">💗</span>
+    <div class="csh-text"><h2>Statues & Scale Figures</h2><p>Premium scale figure masterpieces with exquisite detail</p></div>
+    <a href="shop.html?cat=statue" class="btn btn-cyan csh-link">Shop All →</a>
+  </div>
+  <div class="products-grid" id="statue-grid"></div>
+</div>
+
+<div class="col-section" id="mecha">
+  <div class="col-sec-header reveal" style="background:rgba(191,90,242,0.07);border-color:rgba(191,90,242,0.3);">
+    <span class="csh-icon">🤖</span>
+    <div class="csh-text"><h2>Mecha & Gunpla</h2><p>High-Grade, Master-Grade, and premium resin mecha kits</p></div>
+    <a href="shop.html?cat=mecha" class="btn btn-outline-gold csh-link">Shop All →</a>
+  </div>
+  <div class="products-grid" id="mecha-grid"></div>
+</div>
+
+<!-- GIFT SETS -->
+<div class="gift-section">
+  <div class="section-header reveal"><div class="section-title">🎁 Gift Sets <span class="glow-line"></span></div></div>
+  <div class="gift-grid">
+    <div class="gift-card g-pink reveal" onclick="showToast('🎁 Starter Bundle added to cart!')">
+      <span class="gift-emoji">🎁</span>
+      <h3>Beginner Bundle</h3>
+      <p>3 entry-level figures + nendoroid + plush. Perfect for new collectors aged 10+.</p>
+      <div class="gift-tags"><span class="gtag">⚔️ ACTION</span><span class="gtag">⚡ CHIBI</span><span class="gtag">🎤 PLUSH</span></div>
+      <div class="gift-price">¥3,999 <span style="font-size:0.8rem;color:var(--muted);text-decoration:line-through;font-family:'M PLUS Rounded 1c',sans-serif;">¥5,500</span></div>
+      <button class="btn btn-neon">🛒 Add Set to Cart</button>
+    </div>
+    <div class="gift-card g-cyan reveal" onclick="showToast('🎁 Collector\'s Edition added to cart!')">
+      <span class="gift-emoji">🏆</span>
+      <h3>Collector's Edition</h3>
+      <p>10 premium figures spanning all categories — the ultimate anime shelf starter.</p>
+      <div class="gift-tags"><span class="gtag">PREMIUM</span><span class="gtag">CURATED</span><span class="gtag">10 FIGS</span></div>
+      <div class="gift-price">¥14,999 <span style="font-size:0.8rem;color:var(--muted);text-decoration:line-through;font-family:'M PLUS Rounded 1c',sans-serif;">¥22,000</span></div>
+      <button class="btn btn-cyan">🛒 Add Set to Cart</button>
+    </div>
+    <div class="gift-card g-gold reveal" onclick="showToast('🎁 Mystery Box added to cart!')">
+      <span class="gift-emoji">📦</span>
+      <h3>Mystery Sakura Box</h3>
+      <p>3 mystery figures hand-picked by our collectors + premium anime gift wrap + card.</p>
+      <div class="gift-tags"><span class="gtag">MYSTERY</span><span class="gtag">GIFT WRAP</span><span class="gtag">CARD</span></div>
+      <div class="gift-price">¥2,999 <span style="font-size:0.8rem;color:var(--muted);text-decoration:line-through;font-family:'M PLUS Rounded 1c',sans-serif;">¥4,000</span></div>
+      <button class="btn btn-gold">🛒 Add Set to Cart</button>
+    </div>
+  </div>
+</div>
+
+<div class="features-strip">
+  <div class="feat-item reveal"><div class="feat-icon">✈️</div><div class="feat-text"><h4>Free Shipping</h4><p>Orders above ₹1,999</p></div></div>
+  <div class="feat-item reveal"><div class="feat-icon">🔒</div><div class="feat-text"><h4>Secure Checkout</h4><p>SSL encrypted</p></div></div>
+  <div class="feat-item reveal"><div class="feat-icon">🔄</div><div class="feat-text"><h4>30-Day Returns</h4><p>Hassle-free policy</p></div></div>
+  <div class="feat-item reveal"><div class="feat-icon">🎁</div><div class="feat-text"><h4>Gift Wrap Free</h4><p>On any order</p></div></div>
+</div>
+
+<div id="site-footer"></div>
+<div id="toast"></div>
+<script src="app.js"></script>
+<script>
+window.PAGE_ID='collections.html';
+document.addEventListener('DOMContentLoaded',()=>{
+  ['action','statue','mecha'].forEach(cat=>{
+    document.getElementById(cat+'-grid').innerHTML=PRODUCTS.filter(p=>p.cat===cat).map(productCard).join('');
+  });
+  initReveal();
+});
+</script>
+</body>
+</html>
