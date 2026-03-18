@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deals — ANIMEBOX</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.deals-hero{padding:4rem 5% 3rem;background:linear-gradient(135deg,#1a0010,#0a0010);border-bottom:1px solid rgba(255,45,120,0.3);position:relative;overflow:hidden;}
+.deals-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(255,45,120,0.02) 30px,rgba(255,45,120,0.02) 60px);}
+.deals-hero::after{content:'🔥💥⚡✨';position:absolute;right:4%;top:50%;transform:translateY(-50%);font-size:4rem;letter-spacing:0.6rem;opacity:0.08;}
+.deals-hero h1{font-family:'Bangers',cursive;font-size:3.5rem;letter-spacing:0.06em;position:relative;}
+.deals-hero h1 span{background:linear-gradient(135deg,var(--neon-pink),var(--neon-yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,45,120,0.4));}
+.deals-hero p{color:var(--muted);font-size:0.95rem;margin-top:0.5rem;position:relative;}
+
+.countdown-bar{background:rgba(26,0,48,0.9);border-bottom:1px solid rgba(255,45,120,0.2);padding:1.2rem 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.cd-label{font-family:'Orbitron',monospace;font-size:0.82rem;font-weight:700;color:var(--neon-pink);letter-spacing:0.08em;}
+.cd-timer{display:flex;gap:0.6rem;}
+.cd-unit{background:rgba(255,45,120,0.1);border:1px solid rgba(255,45,120,0.3);border-radius:8px;padding:0.5rem 0.9rem;text-align:center;min-width:60px;box-shadow:0 0 12px rgba(255,45,120,0.1);}
+.cd-num{font-family:'Orbitron',monospace;font-size:1.8rem;font-weight:900;color:var(--neon-pink);line-height:1;text-shadow:0 0 16px rgba(255,45,120,0.5);}
+.cd-lbl{font-size:0.6rem;color:var(--muted);font-weight:700;letter-spacing:0.1em;font-family:'Orbitron',monospace;}
+.save-badge{background:rgba(57,255,20,0.1);border:1px solid rgba(57,255,20,0.4);border-radius:4px;padding:0.35rem 1rem;font-family:'Orbitron',monospace;font-weight:700;font-size:0.8rem;color:var(--neon-green);box-shadow:0 0 12px rgba(57,255,20,0.2);}
+
+.deal-banners{display:grid;grid-template-columns:3fr 2fr;gap:1.2rem;padding:2.5rem 5% 0;position:relative;z-index:1;}
+.deal-banner{border-radius:14px;padding:2.2rem;cursor:pointer;transition:transform 0.2s;position:relative;overflow:hidden;border:1px solid;}
+.deal-banner:hover{transform:translateY(-4px);}
+.db-flash{background:linear-gradient(135deg,#1a0020,#0a0010);border-color:rgba(255,45,120,0.4);box-shadow:0 0 30px rgba(255,45,120,0.1);}
+.db-bundle{background:linear-gradient(135deg,#001020,#000810);border-color:rgba(0,245,255,0.3);box-shadow:0 0 20px rgba(0,245,255,0.08);}
+.db-bg{position:absolute;right:1rem;top:50%;transform:translateY(-50%);font-size:6rem;opacity:0.07;animation:spin-slow 25s linear infinite;}
+@keyframes spin-slow{to{transform:translateY(-50%) rotate(360deg);}}
+.db-flash h2{font-family:'Bangers',cursive;font-size:2rem;letter-spacing:0.05em;color:var(--neon-pink);text-shadow:0 0 20px rgba(255,45,120,0.4);margin-bottom:0.4rem;}
+.db-bundle h2{font-family:'Bangers',cursive;font-size:2rem;letter-spacing:0.05em;color:var(--neon-cyan);text-shadow:0 0 20px rgba(0,245,255,0.4);margin-bottom:0.4rem;}
+.deal-banner p{color:var(--muted);font-size:0.88rem;margin-bottom:1.2rem;position:relative;z-index:1;}
+
+.deal-tabs{display:flex;gap:0.8rem;padding:2rem 5% 0;flex-wrap:wrap;position:relative;z-index:1;}
+.deal-tab{background:rgba(255,45,120,0.06);border:1px solid rgba(255,45,120,0.2);border-radius:6px;padding:0.5rem 1.2rem;font-weight:800;font-size:0.8rem;cursor:pointer;transition:all 0.2s;color:var(--muted);font-family:'Orbitron',monospace;letter-spacing:0.06em;}
+.deal-tab:hover,.deal-tab.active{background:rgba(255,45,120,0.15);border-color:var(--neon-pink);color:var(--neon-pink);box-shadow:0 0 12px rgba(255,45,120,0.2);}
+
+.deal-strip{background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple));color:#fff;font-weight:900;font-size:0.7rem;padding:4px 0;text-align:center;letter-spacing:0.1em;font-family:'Orbitron',monospace;}
+
+.new-section{padding:3rem 5% 1rem;position:relative;z-index:1;}
+.live-badge{background:rgba(57,255,20,0.1);border:1px solid rgba(57,255,20,0.4);border-radius:4px;padding:2px 10px;font-family:'Orbitron',monospace;font-size:0.68rem;font-weight:700;color:var(--neon-green);letter-spacing:0.08em;animation:pulse-green 2s infinite;}
+@keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(57,255,20,0.4);}50%{box-shadow:0 0 0 6px rgba(57,255,20,0);}}
+
+@media(max-width:768px){.deal-banners{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="cursor"></div><div id="cursor-trail"></div>
+<div id="site-header"></div>
+
+<div class="deals-hero">
+  <h1>🔥 <span>HOT DEALS</span></h1>
+  <p>Flash sales, limited drops, and new season arrivals — updated daily</p>
+</div>
+
+<div class="countdown-bar">
+  <span class="cd-label">⏰ SALE ENDS IN:</span>
+  <div class="cd-timer">
+    <div class="cd-unit"><div class="cd-num" id="cd-h">00</div><div class="cd-lbl">HRS</div></div>
+    <div class="cd-unit"><div class="cd-num" id="cd-m">00</div><div class="cd-lbl">MIN</div></div>
+    <div class="cd-unit"><div class="cd-num" id="cd-s">00</div><div class="cd-lbl">SEC</div></div>
+  </div>
+  <span class="save-badge">● SAVE UP TO 40%</span>
+</div>
+
+<div class="deal-banners reveal">
+  <div class="deal-banner db-flash" onclick="location.href='shop.html'">
+    <div class="db-bg">⚡</div>
+    <h2>⚡ FLASH DROP — 40% OFF</h2>
+    <p>Today only — all statues and mecha kits at massive discount.</p>
+    <a href="shop.html?cat=statue" class="btn btn-neon" style="position:relative;z-index:1;">Shop Statues →</a>
+  </div>
+  <div class="deal-banner db-bundle" onclick="location.href='collections.html'">
+    <div class="db-bg">🌸</div>
+    <h2>🎁 BUNDLE DEALS</h2>
+    <p>Buy 3 figures, get 1 free across all categories.</p>
+    <a href="collections.html" class="btn btn-cyan" style="position:relative;z-index:1;margin-top:0.5rem;">View Bundles →</a>
+  </div>
+</div>
+
+<div class="deal-tabs reveal">
+  <button class="deal-tab active" onclick="filterDeals('sale',this)">🟡 ON SALE</button>
+  <button class="deal-tab" onclick="filterDeals('hot',this)">🔥 HOT</button>
+  <button class="deal-tab" onclick="filterDeals('new',this)">🟢 NEW</button>
+  <button class="deal-tab" onclick="filterDeals('limited',this)">💜 LIMITED</button>
+  <button class="deal-tab" onclick="filterDeals('rare',this)">⭐ RARE</button>
+</div>
+
+<section class="section" style="padding-top:2rem;">
+  <div class="products-grid" id="deals-grid"></div>
+</section>
+
+<div class="new-section">
+  <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1.5rem;" class="reveal">
+    <div class="section-title">✨ JUST ARRIVED <span class="glow-line"></span></div>
+    <span class="live-badge">● LIVE</span>
+  </div>
+  <div class="products-grid" id="new-grid"></div>
+</div>
+
+<div class="features-strip" style="margin-top:3rem;">
+  <div class="feat-item"><div class="feat-icon">✈️</div><div class="feat-text"><h4>Free Shipping</h4><p>Orders above ₹1,999</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🔒</div><div class="feat-text"><h4>Secure Checkout</h4><p>SSL encrypted</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🔄</div><div class="feat-text"><h4>30-Day Returns</h4><p>Hassle-free policy</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🎁</div><div class="feat-text"><h4>Gift Wrap Free</h4><p>On any order</p></div></div>
+</div>
+
+<div id="site-footer"></div>
+<div id="toast"></div>
+<script src="app.js"></script>
+<script>
+window.PAGE_ID='deals.html';
+function filterDeals(badge,btn){
+  document.querySelectorAll('.deal-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const list=PRODUCTS.filter(p=>p.badge===badge);
+  document.getElementById('deals-grid').innerHTML=list.length
+    ?list.map(p=>{
+        const disc=p.old?Math.round((1-p.price/p.old)*100):null;
+        return `<a class="product-card reveal" href="product.html?id=${p.id}">
+          <div class="deal-strip">🔥 ${badge.toUpperCase()} DEAL</div>
+          <div class="card-img ${p.acc}" style="position:relative;">
+            <span class="vi">${p.emoji}</span>
+            ${disc?`<span style="position:absolute;top:12px;right:12px;background:var(--neon-green);color:#000;font-family:Orbitron,monospace;font-size:0.75rem;font-weight:900;padding:4px 10px;border-radius:4px;box-shadow:0 0 12px rgba(57,255,20,0.5);">-${disc}%</span>`:''}
+          </div>
+          <div class="card-body">
+            <div class="card-cat">${p.series}</div>
+            <div class="card-name">${p.name}</div>
+            <div class="card-stars">${stars(p.stars)} <span>(${p.reviews})</span></div>
+            <div class="card-foot">
+              <div class="card-price">${p.old?`<span class="old-p">${currency(p.old)}</span>`:''} ${currency(p.price)}</div>
+              <button class="add-btn" onclick="event.preventDefault();addToCart(${p.id},'${p.name}')">+</button>
+            </div>
+          </div>
+        </a>`;
+      }).join('')
+    :'<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-family:Orbitron,monospace;font-size:0.8rem;letter-spacing:0.1em;font-weight:700;">NO DEALS IN THIS CATEGORY. CHECK BACK SOON!</p>';
+  initReveal();
+}
+function startCountdown(){
+  const end=new Date();end.setDate(end.getDate()+((7-end.getDay())%7||7));end.setHours(23,59,59,0);
+  setInterval(()=>{const diff=end-new Date();if(diff<0)return;const h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);document.getElementById('cd-h').textContent=String(h).padStart(2,'0');document.getElementById('cd-m').textContent=String(m).padStart(2,'0');document.getElementById('cd-s').textContent=String(s).padStart(2,'0');},1000);
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  filterDeals('sale',document.querySelector('.deal-tab'));
+  document.getElementById('new-grid').innerHTML=PRODUCTS.filter(p=>p.badge==='new').map(productCard).join('');
+  startCountdown();initReveal();
+});
+</script>
+</body>
+</html>
