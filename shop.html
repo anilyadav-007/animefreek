@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — ANIMEBOX</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.shop-hero {
+  padding:3.5rem 5% 2.5rem;
+  background:linear-gradient(135deg,#0d0020,#0a0010);
+  border-bottom:1px solid rgba(255,45,120,0.2);
+  position:relative; overflow:hidden;
+}
+.shop-hero::after{content:'⚔️🏮🤖💗⚡🌊';position:absolute;right:4%;top:50%;transform:translateY(-50%);font-size:3rem;letter-spacing:0.6rem;opacity:0.06;}
+.shop-hero h1{font-family:'Bangers',cursive;font-size:2.8rem;letter-spacing:0.06em;color:var(--text);}
+.shop-hero h1 span{color:var(--neon-pink);}
+.shop-hero p{color:var(--muted);font-size:0.9rem;margin-top:0.4rem;}
+.breadcrumb{display:flex;gap:0.5rem;font-size:0.78rem;color:var(--muted);margin-bottom:0.8rem;font-family:'Orbitron',monospace;}
+.breadcrumb a{color:var(--muted);text-decoration:none;}
+.breadcrumb a:hover{color:var(--neon-cyan);}
+
+.shop-layout{display:grid;grid-template-columns:230px 1fr;gap:2rem;padding:2.5rem 5%;position:relative;z-index:1;}
+
+/* SIDEBAR */
+.sidebar{position:sticky;top:120px;height:fit-content;}
+.filter-block{
+  background:rgba(26,0,48,0.6); backdrop-filter:blur(8px);
+  border:1px solid rgba(255,45,120,0.2); border-radius:10px;
+  padding:1.3rem; margin-bottom:1rem;
+}
+.filter-block h3{font-family:'Orbitron',monospace;font-size:0.78rem;letter-spacing:0.1em;margin-bottom:1rem;color:var(--neon-cyan);text-transform:uppercase;}
+.filter-option{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem;cursor:pointer;}
+.filter-option input[type=checkbox]{width:16px;height:16px;accent-color:var(--neon-pink);cursor:pointer;}
+.filter-option label{font-weight:700;font-size:0.85rem;cursor:pointer;color:var(--muted);}
+.filter-option label:hover{color:var(--neon-pink);}
+.price-range input[type=range]{width:100%;accent-color:var(--neon-pink);margin-top:0.5rem;}
+.price-display{font-family:'Orbitron',monospace;font-size:0.95rem;color:var(--neon-yellow);margin-top:6px;font-weight:700;}
+.clear-btn{background:transparent;border:1px solid rgba(255,45,120,0.3);border-radius:6px;padding:0.4rem 1rem;font-weight:800;font-size:0.78rem;cursor:pointer;color:var(--neon-pink);transition:all 0.2s;font-family:'M PLUS Rounded 1c',sans-serif;margin-top:0.5rem;}
+.clear-btn:hover{background:rgba(255,45,120,0.15);box-shadow:0 0 10px rgba(255,45,120,0.2);}
+
+/* MAIN */
+.shop-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:1rem;}
+.result-count{font-family:'Orbitron',monospace;font-size:0.75rem;color:var(--muted);font-weight:700;}
+.sort-select{border:1px solid rgba(255,45,120,0.3);border-radius:6px;padding:0.45rem 1rem;font-family:'Orbitron',monospace;font-weight:700;font-size:0.75rem;background:rgba(26,0,48,0.8);color:var(--text);cursor:pointer;outline:none;}
+.sort-select:focus{border-color:var(--neon-pink);}
+
+.search-bar{display:flex;gap:0.6rem;margin-bottom:1.3rem;}
+.search-input{flex:1;border:1px solid rgba(255,45,120,0.3);border-radius:6px;padding:0.65rem 1.1rem;background:rgba(26,0,48,0.6);color:var(--text);font-family:'M PLUS Rounded 1c',sans-serif;font-weight:700;font-size:0.88rem;outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
+.search-input:focus{border-color:var(--neon-pink);box-shadow:0 0 12px rgba(255,45,120,0.2);}
+.search-input::placeholder{color:rgba(255,45,120,0.35);}
+
+.cat-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.3rem;}
+.cat-tab{background:rgba(255,45,120,0.06);border:1px solid rgba(255,45,120,0.2);border-radius:6px;padding:0.42rem 1rem;font-weight:800;font-size:0.8rem;cursor:pointer;transition:all 0.2s;color:var(--muted);font-family:'M PLUS Rounded 1c',sans-serif;}
+.cat-tab:hover{border-color:var(--neon-pink);color:var(--neon-pink);}
+.cat-tab.active{background:rgba(255,45,120,0.15);border-color:var(--neon-pink);color:var(--neon-pink);box-shadow:0 0 12px rgba(255,45,120,0.2);}
+
+.pagination{display:flex;gap:0.5rem;justify-content:center;margin-top:2.5rem;flex-wrap:wrap;}
+.page-btn{width:38px;height:38px;border:1px solid rgba(255,45,120,0.25);border-radius:6px;background:rgba(26,0,48,0.6);color:var(--muted);font-weight:800;font-size:0.85rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;}
+.page-btn:hover,.page-btn.active{border-color:var(--neon-pink);color:var(--neon-pink);box-shadow:0 0 12px rgba(255,45,120,0.3);}
+
+@media(max-width:768px){.shop-layout{grid-template-columns:1fr;}.sidebar{position:static;}}
+</style>
+</head>
+<body>
+<div id="cursor"></div><div id="cursor-trail"></div>
+<div id="site-header"></div>
+
+<div class="shop-hero">
+  <div class="breadcrumb"><a href="index.html">Home</a> › <span>Shop</span></div>
+  <h1>All <span>Figures</span></h1>
+  <p>Browse 500+ premium anime figures, statues, mecha kits & more</p>
+</div>
+
+<div class="shop-layout">
+  <aside class="sidebar">
+    <div class="filter-block">
+      <h3>Category</h3>
+      <div class="filter-option"><input type="checkbox" id="f-action" onchange="applyFilters()"><label for="f-action">⚔️ Action Figures</label></div>
+      <div class="filter-option"><input type="checkbox" id="f-statue" onchange="applyFilters()"><label for="f-statue">💗 Statues</label></div>
+      <div class="filter-option"><input type="checkbox" id="f-mecha" onchange="applyFilters()"><label for="f-mecha">🤖 Mecha / Gundam</label></div>
+      <div class="filter-option"><input type="checkbox" id="f-chibi" onchange="applyFilters()"><label for="f-chibi">⚡ Chibi / Nendo</label></div>
+      <div class="filter-option"><input type="checkbox" id="f-diorama" onchange="applyFilters()"><label for="f-diorama">🏮 Diorama</label></div>
+      <div class="filter-option"><input type="checkbox" id="f-plush" onchange="applyFilters()"><label for="f-plush">🎤 Plush</label></div>
+      <div class="filter-option"><input type="checkbox" id="f-garage" onchange="applyFilters()"><label for="f-garage">⛓️ Garage Kits</label></div>
+    </div>
+    <div class="filter-block">
+      <h3>Max Price</h3>
+      <input type="range" id="price-range" min="699" max="8999" value="8999" oninput="updatePrice(this.value)">
+      <div class="price-display" id="price-display">Up to ¥8,999</div>
+    </div>
+    <div class="filter-block">
+      <h3>Rating</h3>
+      <div class="filter-option"><input type="checkbox" id="r5" onchange="applyFilters()"><label for="r5">★★★★★ (5 stars)</label></div>
+      <div class="filter-option"><input type="checkbox" id="r4" onchange="applyFilters()"><label for="r4">★★★★☆ (4+ stars)</label></div>
+    </div>
+    <div class="filter-block">
+      <h3>Badge</h3>
+      <div class="filter-option"><input type="checkbox" id="b-new" onchange="applyFilters()"><label for="b-new">🟢 New</label></div>
+      <div class="filter-option"><input type="checkbox" id="b-sale" onchange="applyFilters()"><label for="b-sale">🟡 On Sale</label></div>
+      <div class="filter-option"><input type="checkbox" id="b-hot" onchange="applyFilters()"><label for="b-hot">🔥 Hot</label></div>
+      <div class="filter-option"><input type="checkbox" id="b-limited" onchange="applyFilters()"><label for="b-limited">💜 Limited</label></div>
+      <div class="filter-option"><input type="checkbox" id="b-rare" onchange="applyFilters()"><label for="b-rare">⭐ Rare</label></div>
+    </div>
+    <button class="clear-btn" onclick="clearFilters()">✕ Clear All Filters</button>
+  </aside>
+
+  <div>
+    <div class="search-bar">
+      <input class="search-input" id="search-input" type="text" placeholder="🔍  Search figures, series, characters..." oninput="applyFilters()">
+    </div>
+    <div class="cat-tabs">
+      <button class="cat-tab active" onclick="setCat('all',this)">🔥 All</button>
+      <button class="cat-tab" onclick="setCat('action',this)">⚔️ Action</button>
+      <button class="cat-tab" onclick="setCat('statue',this)">💗 Statues</button>
+      <button class="cat-tab" onclick="setCat('mecha',this)">🤖 Mecha</button>
+      <button class="cat-tab" onclick="setCat('chibi',this)">⚡ Chibi</button>
+      <button class="cat-tab" onclick="setCat('diorama',this)">🏮 Diorama</button>
+      <button class="cat-tab" onclick="setCat('plush',this)">🎤 Plush</button>
+      <button class="cat-tab" onclick="setCat('garage',this)">⛓️ Garage</button>
+    </div>
+    <div class="shop-toolbar">
+      <span class="result-count" id="result-count">SHOWING 24 FIGURES</span>
+      <select class="sort-select" onchange="applyFilters()" id="sort-select">
+        <option value="default">SORT: FEATURED</option>
+        <option value="price-low">PRICE: LOW → HIGH</option>
+        <option value="price-high">PRICE: HIGH → LOW</option>
+        <option value="rating">TOP RATED</option>
+        <option value="reviews">MOST REVIEWED</option>
+      </select>
+    </div>
+    <div class="products-grid" id="shop-grid"></div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+</div>
+
+<div class="features-strip">
+  <div class="feat-item"><div class="feat-icon">✈️</div><div class="feat-text"><h4>Free Shipping</h4><p>Orders above ₹1,999</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🔒</div><div class="feat-text"><h4>Secure Checkout</h4><p>SSL encrypted</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🔄</div><div class="feat-text"><h4>30-Day Returns</h4><p>Hassle-free policy</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🎁</div><div class="feat-text"><h4>Gift Wrap Free</h4><p>On any order</p></div></div>
+</div>
+
+<div id="site-footer"></div>
+<div id="toast"></div>
+<script src="app.js"></script>
+<script>
+window.PAGE_ID = 'shop.html';
+let activeCat = 'all';
+const PER_PAGE = 12;
+let currentPage = 1;
+
+function setCat(cat,btn){
+  activeCat=cat;
+  document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentPage=1; applyFilters();
+}
+function updatePrice(v){
+  document.getElementById('price-display').textContent='Up to ¥'+parseInt(v).toLocaleString('en-IN');
+  applyFilters();
+}
+function clearFilters(){
+  ['f-action','f-statue','f-mecha','f-chibi','f-diorama','f-plush','f-garage','r5','r4','b-new','b-sale','b-hot','b-limited','b-rare'].forEach(id=>{const el=document.getElementById(id);if(el)el.checked=false;});
+  document.getElementById('price-range').value=8999; updatePrice(8999);
+  document.getElementById('search-input').value='';
+  activeCat='all'; document.querySelectorAll('.cat-tab').forEach((b,i)=>b.classList.toggle('active',i===0));
+  currentPage=1; applyFilters();
+}
+function applyFilters(){
+  let list=[...PRODUCTS];
+  const q=document.getElementById('search-input').value.toLowerCase();
+  if(q) list=list.filter(p=>p.name.toLowerCase().includes(q)||p.series.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q));
+  if(activeCat!=='all') list=list.filter(p=>p.cat===activeCat);
+  const maxP=parseInt(document.getElementById('price-range').value);
+  list=list.filter(p=>p.price<=maxP);
+  const cats=['action','statue','mecha','chibi','diorama','plush','garage'].filter(c=>document.getElementById('f-'+c)?.checked);
+  if(cats.length) list=list.filter(p=>cats.includes(p.cat));
+  const r5=document.getElementById('r5').checked,r4=document.getElementById('r4').checked;
+  if(r5) list=list.filter(p=>p.stars===5); else if(r4) list=list.filter(p=>p.stars>=4);
+  const badges=[];
+  ['new','sale','hot','limited','rare'].forEach(b=>{if(document.getElementById('b-'+b).checked)badges.push(b);});
+  if(badges.length) list=list.filter(p=>badges.includes(p.badge));
+  const sort=document.getElementById('sort-select').value;
+  if(sort==='price-low') list.sort((a,b)=>a.price-b.price);
+  else if(sort==='price-high') list.sort((a,b)=>b.price-a.price);
+  else if(sort==='rating') list.sort((a,b)=>b.stars-a.stars);
+  else if(sort==='reviews') list.sort((a,b)=>b.reviews-a.reviews);
+  const total=list.length;
+  const pages=Math.ceil(total/PER_PAGE);
+  const start=(currentPage-1)*PER_PAGE;
+  const paged=list.slice(start,start+PER_PAGE);
+  document.getElementById('result-count').textContent=`SHOWING ${paged.length} OF ${total} FIGURES`;
+  document.getElementById('shop-grid').innerHTML=paged.length?paged.map(productCard).join(''):'<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-weight:700;font-family:Orbitron,monospace;font-size:0.8rem;letter-spacing:0.1em;">NO FIGURES FOUND — ADJUST FILTERS</p>';
+  let pg=''; for(let i=1;i<=pages;i++) pg+=`<button class="page-btn${i===currentPage?' active':''}" onclick="goPage(${i})">${i}</button>`;
+  document.getElementById('pagination').innerHTML=pg;
+  initReveal();
+}
+function goPage(n){currentPage=n;applyFilters();window.scrollTo({top:250,behavior:'smooth'});}
+document.addEventListener('DOMContentLoaded',()=>{
+  const params=new URLSearchParams(location.search);
+  const cat=params.get('cat');
+  if(cat){activeCat=cat;document.querySelectorAll('.cat-tab').forEach(b=>{b.classList.toggle('active',b.textContent.toLowerCase().includes(cat));});}
+  applyFilters();
+});
+</script>
+</body>
+</html>
