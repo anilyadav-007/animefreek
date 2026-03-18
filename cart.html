@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart — ANIMEBOX</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.cart-hero{background:linear-gradient(135deg,#0d0020,#0a0010);padding:3rem 5% 2.5rem;border-bottom:1px solid rgba(255,45,120,0.2);}
+.cart-hero h1{font-family:'Bangers',cursive;font-size:2.8rem;letter-spacing:0.06em;color:var(--text);}
+.cart-hero h1 span{color:var(--neon-pink);}
+.cart-hero p{color:var(--muted);font-size:0.85rem;margin-top:0.4rem;font-family:'Orbitron',monospace;}
+
+.cart-layout{display:grid;grid-template-columns:1fr 340px;gap:2rem;padding:3rem 5%;position:relative;z-index:1;align-items:start;}
+
+.cart-empty{text-align:center;padding:5rem 2rem;}
+.empty-em{font-size:5rem;display:block;margin-bottom:1.5rem;animation:sway 3s ease-in-out infinite;}
+@keyframes sway{0%,100%{transform:rotate(-5deg);}50%{transform:rotate(5deg);}}
+.cart-empty h2{font-family:'Bangers',cursive;font-size:2.2rem;letter-spacing:0.06em;margin-bottom:0.8rem;}
+.cart-empty p{color:var(--muted);font-size:0.9rem;margin-bottom:2rem;}
+
+.cart-item{background:rgba(26,0,48,0.6);border:1px solid rgba(255,45,120,0.15);border-radius:12px;padding:1.1rem;display:flex;gap:1rem;align-items:center;margin-bottom:1rem;transition:border-color 0.2s,box-shadow 0.2s;flex-wrap:wrap;}
+.cart-item:hover{border-color:rgba(255,45,120,0.35);box-shadow:0 0 20px rgba(255,45,120,0.08);}
+.ci-img{width:76px;height:76px;border-radius:10px;border:1px solid rgba(255,45,120,0.2);display:flex;align-items:center;justify-content:center;font-size:2.5rem;flex-shrink:0;}
+.ci-info{flex:1;min-width:0;}
+.ci-series{font-family:'Orbitron',monospace;font-size:0.65rem;color:var(--neon-cyan);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+.ci-name{font-family:'Bangers',cursive;font-size:1.15rem;letter-spacing:0.04em;margin:2px 0 4px;}
+.ci-scale{font-size:0.75rem;color:var(--muted);font-weight:600;}
+.ci-actions{display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;}
+.ci-qty{display:flex;align-items:center;border:1px solid rgba(255,45,120,0.25);border-radius:6px;overflow:hidden;background:rgba(26,0,48,0.8);}
+.ci-q-btn{width:30px;height:30px;background:transparent;border:none;font-size:1rem;cursor:pointer;font-weight:800;color:var(--neon-pink);transition:background 0.15s;}
+.ci-q-btn:hover{background:rgba(255,45,120,0.15);}
+.ci-q-val{width:34px;text-align:center;font-weight:800;font-size:0.88rem;border:none;background:transparent;color:var(--text);border-left:1px solid rgba(255,45,120,0.2);border-right:1px solid rgba(255,45,120,0.2);}
+.ci-price{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:700;color:var(--neon-yellow);}
+.ci-remove{background:transparent;border:1px solid rgba(255,45,120,0.2);border-radius:6px;padding:3px 8px;cursor:pointer;font-size:0.75rem;color:var(--muted);font-weight:700;transition:all 0.15s;}
+.ci-remove:hover{border-color:var(--neon-pink);color:var(--neon-pink);}
+
+.order-summary{background:rgba(26,0,48,0.7);border:1px solid rgba(255,45,120,0.2);border-radius:14px;padding:1.8rem;position:sticky;top:120px;box-shadow:0 0 30px rgba(255,45,120,0.1);}
+.order-summary h2{font-family:'Bangers',cursive;font-size:1.6rem;letter-spacing:0.06em;margin-bottom:1.5rem;color:var(--text);}
+.summary-row{display:flex;justify-content:space-between;font-size:0.85rem;font-weight:700;margin-bottom:0.7rem;color:var(--muted);}
+.summary-row.total{font-size:1rem;font-weight:900;border-top:1px solid rgba(255,45,120,0.2);padding-top:0.8rem;margin-top:0.4rem;color:var(--text);}
+.summary-row.total .t-p{font-family:'Orbitron',monospace;font-size:1.4rem;color:var(--neon-yellow);text-shadow:0 0 12px rgba(255,230,0,0.4);}
+.coupon-row{display:flex;gap:0.6rem;margin:1rem 0;}
+.coupon-input{flex:1;border:1px solid rgba(255,45,120,0.25);border-radius:6px;padding:0.5rem 0.9rem;background:rgba(26,0,48,0.8);color:var(--text);font-family:'M PLUS Rounded 1c',sans-serif;font-weight:700;font-size:0.82rem;outline:none;}
+.coupon-input::placeholder{color:rgba(255,45,120,0.3);}
+.coupon-input:focus{border-color:var(--neon-pink);}
+.checkout-btn{width:100%;background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple));color:#fff;border:none;border-radius:8px;padding:1rem;font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:0.06em;cursor:pointer;box-shadow:0 0 20px rgba(255,45,120,0.3);transition:all 0.2s;margin-bottom:0.7rem;}
+.checkout-btn:hover{box-shadow:0 0 40px rgba(255,45,120,0.5);transform:translateY(-2px);}
+.continue-btn{width:100%;background:transparent;color:var(--neon-cyan);border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:0.7rem;font-family:'Orbitron',monospace;font-weight:700;font-size:0.82rem;letter-spacing:0.06em;cursor:pointer;transition:all 0.2s;text-align:center;display:block;text-decoration:none;}
+.continue-btn:hover{background:rgba(0,245,255,0.07);box-shadow:0 0 12px rgba(0,245,255,0.2);}
+.sec-badges{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;margin-top:1rem;}
+.sec-b{font-size:0.68rem;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:3px;font-family:'Orbitron',monospace;}
+
+.reco-section{padding:3rem 5%;position:relative;z-index:1;}
+@media(max-width:900px){.cart-layout{grid-template-columns:1fr;}.order-summary{position:static;}}
+</style>
+</head>
+<body>
+<div id="cursor"></div><div id="cursor-trail"></div>
+<div id="site-header"></div>
+
+<div class="cart-hero">
+  <h1>🛒 Your <span>Cart</span></h1>
+  <p id="cart-hero-sub" style="font-family:'Orbitron',monospace;">0 FIGURES SELECTED</p>
+</div>
+
+<div class="cart-layout">
+  <div id="cart-items-container"></div>
+  <div class="order-summary">
+    <h2>📋 Order Summary</h2>
+    <div class="summary-row"><span>Subtotal</span><span id="s-subtotal">¥0</span></div>
+    <div class="summary-row" id="s-disc-row" style="display:none;color:var(--neon-green)"><span>Discount</span><span id="s-discount">-¥0</span></div>
+    <div class="summary-row"><span>Shipping</span><span id="s-ship">¥149</span></div>
+    <div class="summary-row"><span>Gift Wrap</span><span style="color:var(--neon-green);">FREE</span></div>
+    <div class="summary-row total"><span>Total</span><span class="t-p" id="s-total">¥0</span></div>
+    <div class="coupon-row">
+      <input class="coupon-input" id="coupon-input" type="text" placeholder="COUPON CODE...">
+      <button class="btn btn-neon" onclick="applyCoupon()" style="padding:0.5rem 1rem;font-size:0.78rem;">Apply</button>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">💳 CHECKOUT NOW</button>
+    <a href="shop.html" class="continue-btn">← CONTINUE SHOPPING</a>
+    <div class="sec-badges"><span class="sec-b">🔒 SSL</span><span class="sec-b">💳 SAFE PAY</span><span class="sec-b">🔄 RETURNS</span></div>
+  </div>
+</div>
+
+<div class="reco-section">
+  <div class="section-header reveal"><div class="section-title">🎯 You Might Like <span class="glow-line"></span></div><a href="shop.html" class="see-all">Shop All →</a></div>
+  <div class="products-grid" id="reco-grid"></div>
+</div>
+
+<div class="features-strip">
+  <div class="feat-item"><div class="feat-icon">✈️</div><div class="feat-text"><h4>Free Shipping</h4><p>Orders above ₹1,999</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🔒</div><div class="feat-text"><h4>Secure Checkout</h4><p>SSL encrypted</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🔄</div><div class="feat-text"><h4>30-Day Returns</h4><p>Hassle-free policy</p></div></div>
+  <div class="feat-item"><div class="feat-icon">🎁</div><div class="feat-text"><h4>Gift Wrap Free</h4><p>On any order</p></div></div>
+</div>
+
+<div id="site-footer"></div>
+<div id="toast"></div>
+<script src="app.js"></script>
+<script>
+window.PAGE_ID='cart.html';
+let discount=0;
+function renderCart(){
+  const cart=getCart();
+  const container=document.getElementById('cart-items-container');
+  if(!cart.length){
+    container.innerHTML=`<div class="cart-empty"><span class="empty-em">🛒</span><h2>Your cart is empty!</h2><p>No figures yet. Go find your favourite characters!</p><a href="shop.html" class="btn btn-neon" style="font-size:1rem;padding:0.85rem 2rem;">⚔️ Browse Figures</a></div>`;
+    updateSummary([]);document.getElementById('cart-hero-sub').textContent='0 FIGURES SELECTED';return;
+  }
+  const total=cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cart-hero-sub').textContent=`${total} FIGURE${total!==1?'S':''} SELECTED`;
+  container.innerHTML=cart.map(item=>{
+    const p=PRODUCTS.find(x=>x.id===item.id);
+    if(!p) return '';
+    return `<div class="cart-item" id="ci-${p.id}">
+      <div class="ci-img ${p.acc}">${p.emoji}</div>
+      <div class="ci-info">
+        <div class="ci-series">${p.series}</div>
+        <div class="ci-name">${p.name}</div>
+        <div class="ci-scale">${p.scale} · ${p.material}</div>
+      </div>
+      <div class="ci-actions">
+        <div class="ci-qty">
+          <button class="ci-q-btn" onclick="changeCartQty(${p.id},-1)">−</button>
+          <input class="ci-q-val" id="q-${p.id}" value="${item.qty}" readonly>
+          <button class="ci-q-btn" onclick="changeCartQty(${p.id},1)">+</button>
+        </div>
+        <span class="ci-price">${currency(p.price*item.qty)}</span>
+        <button class="ci-remove" onclick="removeFromCart(${p.id})">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+  updateSummary(cart);
+}
+function updateSummary(cart){
+  const sub=cart.reduce((s,i)=>{const p=PRODUCTS.find(x=>x.id===i.id);return p?s+p.price*i.qty:s;},0);
+  const ship=sub>=1999?0:149;
+  const total=sub-discount+ship;
+  document.getElementById('s-subtotal').textContent=currency(sub);
+  document.getElementById('s-ship').textContent=ship===0?'🎉 FREE!':currency(ship);
+  document.getElementById('s-total').textContent=currency(total);
+  if(discount>0){document.getElementById('s-disc-row').style.display='flex';document.getElementById('s-discount').textContent='-'+currency(discount);}
+}
+function changeCartQty(id,d){const cart=getCart();const idx=cart.findIndex(i=>i.id===id);if(idx>-1){cart[idx].qty=Math.max(1,cart[idx].qty+d);saveCart(cart);renderCart();updateCartBadge();}}
+function removeFromCart(id){saveCart(getCart().filter(i=>i.id!==id));renderCart();updateCartBadge();showToast('🗑️ Removed from cart');}
+function applyCoupon(){
+  const code=document.getElementById('coupon-input').value.trim().toUpperCase();
+  if(code==='ANIME20'){discount=500;showToast('🌸 ANIME20 applied! ¥500 off!');renderCart();}
+  else if(code==='OTAKU10'){discount=300;showToast('⚔️ OTAKU10 applied! ¥300 off!');renderCart();}
+  else{showToast('❌ Invalid code. Try ANIME20 or OTAKU10');}
+}
+function checkout(){
+  if(!getCart().length){showToast('❌ Your cart is empty!');return;}
+  showToast('🎉 Order placed! Arigatou gozaimasu! 🌸');
+  saveCart([]);updateCartBadge();setTimeout(renderCart,500);
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  renderCart();
+  document.getElementById('reco-grid').innerHTML=[...PRODUCTS].sort(()=>Math.random()-0.5).slice(0,4).map(productCard).join('');
+  initReveal();
+});
+</script>
+</body>
+</html>
