@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figure Detail — ANIMEBOX</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.product-detail{display:grid;grid-template-columns:1fr 1fr;gap:4rem;padding:4rem 5%;align-items:start;position:relative;z-index:1;}
+
+.img-showcase{position:sticky;top:120px;}
+.main-img{
+  background:rgba(26,0,48,0.8); border:1px solid rgba(255,45,120,0.3); border-radius:16px;
+  height:400px;display:flex;align-items:center;justify-content:center;font-size:10rem;
+  margin-bottom:1rem;position:relative;overflow:hidden;cursor:zoom-in;
+  box-shadow:0 0 40px rgba(255,45,120,0.15),inset 0 0 60px rgba(0,0,0,0.5);
+  transition:border-color 0.3s;
+}
+.main-img:hover{border-color:var(--neon-pink);box-shadow:0 0 60px rgba(255,45,120,0.3);}
+.main-img .big-emoji{transition:transform 0.4s,filter 0.4s;}
+.main-img:hover .big-emoji{transform:scale(1.1) rotate(-5deg);filter:drop-shadow(0 0 30px rgba(255,45,120,0.7));}
+.main-img-badge{position:absolute;top:14px;left:14px;}
+.thumb-row{display:flex;gap:0.7rem;}
+.thumb{
+  background:rgba(26,0,48,0.8);border:1px solid rgba(255,45,120,0.2);border-radius:10px;
+  width:70px;height:70px;display:flex;align-items:center;justify-content:center;font-size:2rem;
+  cursor:pointer;transition:all 0.2s;
+}
+.thumb:hover,.thumb.active{border-color:var(--neon-pink);box-shadow:0 0 16px rgba(255,45,120,0.4);}
+
+/* INFO */
+.pi-bc{display:flex;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:1rem;font-family:'Orbitron',monospace;}
+.pi-bc a{color:var(--muted);text-decoration:none;}
+.pi-bc a:hover{color:var(--neon-cyan);}
+.pi-series{font-family:'Orbitron',monospace;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;color:var(--neon-cyan);text-transform:uppercase;margin-bottom:4px;}
+.pi-name{font-family:'Bangers',cursive;font-size:3rem;letter-spacing:0.05em;line-height:1.05;margin-bottom:0.8rem;color:var(--text);}
+.pi-stars{display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem;}
+.pi-stars .s{color:var(--gold);font-size:1.1rem;}
+.pi-stars .cnt{font-size:0.82rem;color:var(--muted);font-family:'Orbitron',monospace;}
+.pi-price-row{display:flex;align-items:baseline;gap:0.8rem;margin-bottom:1.5rem;}
+.pi-price{font-family:'Orbitron',monospace;font-size:2.2rem;font-weight:900;color:var(--neon-yellow);text-shadow:0 0 16px rgba(255,230,0,0.4);}
+.pi-old{font-size:1.1rem;color:var(--muted);text-decoration:line-through;font-family:'M PLUS Rounded 1c',sans-serif;}
+.pi-disc{background:var(--neon-green);color:#000;font-weight:900;font-size:0.78rem;padding:3px 10px;border-radius:4px;font-family:'Orbitron',monospace;}
+
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:1.4rem;}
+.spec-item{background:rgba(26,0,48,0.6);border:1px solid rgba(255,45,120,0.15);border-radius:8px;padding:0.75rem 1rem;}
+.spec-label{font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;color:var(--neon-cyan);letter-spacing:0.1em;text-transform:uppercase;}
+.spec-val{font-weight:800;font-size:0.9rem;margin-top:3px;color:var(--text);}
+
+.pi-desc{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:1.5rem;}
+
+.qty-row{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;}
+.qty-ctrl{display:flex;align-items:center;border:1px solid rgba(255,45,120,0.3);border-radius:8px;overflow:hidden;background:rgba(26,0,48,0.6);}
+.qty-btn{width:38px;height:38px;background:transparent;border:none;font-size:1.2rem;cursor:pointer;font-weight:800;color:var(--neon-pink);transition:background 0.15s;}
+.qty-btn:hover{background:rgba(255,45,120,0.15);}
+.qty-val{width:44px;text-align:center;font-weight:800;font-size:0.95rem;border:none;background:transparent;color:var(--text);border-left:1px solid rgba(255,45,120,0.2);border-right:1px solid rgba(255,45,120,0.2);}
+
+.action-row{display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1.3rem;}
+.action-row .btn{font-size:0.95rem;padding:0.8rem 1.8rem;}
+.wishlist-btn{background:transparent;border:1px solid rgba(255,45,120,0.3);border-radius:8px;padding:0.7rem 1.2rem;font-weight:800;cursor:pointer;color:var(--neon-pink);transition:all 0.2s;font-family:'M PLUS Rounded 1c',sans-serif;font-size:0.9rem;}
+.wishlist-btn:hover{background:rgba(255,45,120,0.1);box-shadow:0 0 12px rgba(255,45,120,0.2);}
+
+.tag-row{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.tag{background:rgba(0,245,255,0.07);border:1px solid rgba(0,245,255,0.2);border-radius:4px;padding:3px 10px;font-size:0.73rem;font-weight:700;color:var(--neon-cyan);font-family:'Orbitron',monospace;letter-spacing:0.06em;}
+
+/* TABS */
+.tabs-section{padding:0 5% 5rem;position:relative;z-index:1;}
+.tab-bar{display:flex;gap:0;border-bottom:1px solid rgba(255,45,120,0.2);margin-bottom:2rem;overflow-x:auto;}
+.tab-btn{padding:0.8rem 1.4rem;font-weight:800;font-size:0.82rem;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:all 0.2s;color:var(--muted);font-family:'Orbitron',monospace;letter-spacing:0.06em;}
+.tab-btn:hover{color:var(--neon-pink);}
+.tab-btn.active{border-bottom-color:var(--neon-pink);color:var(--neon-pink);text-shadow:0 0 10px rgba(255,45,120,0.4);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+.review-card{background:rgba(26,0,48,0.5);border:1px solid rgba(255,45,120,0.15);border-radius:10px;padding:1.2rem;margin-bottom:0.9rem;transition:border-color 0.2s;}
+.review-card:hover{border-color:rgba(255,45,120,0.3);}
+.review-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;flex-wrap:wrap;gap:0.5rem;}
+.reviewer{font-weight:800;font-size:0.88rem;color:var(--text);}
+.review-date{font-size:0.72rem;color:var(--muted);font-family:'Orbitron',monospace;}
+.review-stars{color:var(--gold);font-size:0.82rem;margin-bottom:0.5rem;}
+.review-text{font-size:0.85rem;line-height:1.65;color:var(--muted);}
+
+.related-section{padding:0 5% 3rem;position:relative;z-index:1;}
+
+@media(max-width:900px){.product-detail{grid-template-columns:1fr;}.img-showcase{position:static;}}
+</style>
+</head>
+<body>
+<div id="cursor"></div><div id="cursor-trail"></div>
+<div id="site-header"></div>
+
+<div id="product-body"></div>
+
+<div id="site-footer"></div>
+<div id="toast"></div>
+<script src="app.js"></script>
+<script>
+window.PAGE_ID = 'shop.html';
+const REVIEWS_DATA = {
+  1:[{name:'Senpai Collector',stars:5,date:'Mar 2026',text:'The Water Breathing pose is PERFECT. Every crease in the haori, the Nichirin Blade glow — absolutely worth the price. Mine arrived in 2 days, zero damage.'},{name:'AniMango99',stars:5,date:'Feb 2026',text:'Third Tanjiro figure I have bought and this is the best sculpt by far. The stand is stable, the paintwork is flawless on the face especially.'}],
+  default:[{name:'FigureFreak_JP',stars:5,date:'Mar 2026',text:'AnimeBox quality is unmatched. Arrived in collector-grade packaging with foam inserts. The figure exceeded my expectations in person.'},{name:'OtakuBase',stars:4,date:'Feb 2026',text:'Really nice detail work. Minor paint bleed on one accessory but AnimeBox sent a replacement part immediately. Great customer service!'}]
+};
+
+let qty=1;
+document.addEventListener('DOMContentLoaded',()=>{
+  const id=parseInt(new URLSearchParams(location.search).get('id'));
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(!p){document.getElementById('product-body').innerHTML='<div style="padding:5rem;text-align:center"><h2 style="font-family:Bangers,cursive;font-size:2rem;">Figure not found</h2><a href="shop.html" class="btn btn-neon" style="margin-top:1.5rem;display:inline-block;">← Back to Shop</a></div>';return;}
+  document.title=p.name+' — ANIMEBOX';
+  const disc=p.old?Math.round((1-p.price/p.old)*100):null;
+  const reviews=REVIEWS_DATA[id]||REVIEWS_DATA.default;
+  const related=PRODUCTS.filter(x=>x.cat===p.cat&&x.id!==p.id).slice(0,4);
+  document.getElementById('product-body').innerHTML=`
+  <div class="product-detail">
+    <div class="img-showcase">
+      <div class="main-img ${p.acc}">
+        <span class="big-emoji">${p.emoji}</span>
+        ${p.badge?`<span class="main-img-badge card-badge badge-${p.badge}">${p.badge.toUpperCase()}</span>`:''}
+      </div>
+      <div class="thumb-row">
+        <div class="thumb active">${p.emoji}</div>
+        <div class="thumb" style="font-size:1rem;color:var(--muted);font-family:Orbitron,monospace;font-size:0.6rem;font-weight:700;letter-spacing:0.05em;">360°</div>
+        <div class="thumb" style="font-size:0.6rem;color:var(--muted);font-family:Orbitron,monospace;font-weight:700;letter-spacing:0.05em;">BOX</div>
+        <div class="thumb" style="font-size:0.6rem;color:var(--muted);font-family:Orbitron,monospace;font-weight:700;letter-spacing:0.05em;">DETAIL</div>
+      </div>
+    </div>
+    <div class="product-info">
+      <div class="pi-bc"><a href="index.html">Home</a> › <a href="shop.html">Shop</a> › <a href="shop.html?cat=${p.cat}">${p.cat.charAt(0).toUpperCase()+p.cat.slice(1)}</a> › ${p.name}</div>
+      <div class="pi-series">${p.series}</div>
+      <div class="pi-name">${p.name}</div>
+      <div class="pi-stars"><span class="s">${stars(p.stars)}</span><span class="cnt">${p.stars}.0 · ${p.reviews} REVIEWS</span></div>
+      <div class="pi-price-row">
+        ${p.old?`<span class="pi-old">${currency(p.old)}</span>`:''}
+        <span class="pi-price">${currency(p.price)}</span>
+        ${disc?`<span class="pi-disc">-${disc}%</span>`:''}
+      </div>
+      <div class="spec-grid">
+        <div class="spec-item"><div class="spec-label">Scale</div><div class="spec-val">${p.scale}</div></div>
+        <div class="spec-item"><div class="spec-label">Material</div><div class="spec-val">${p.material}</div></div>
+        <div class="spec-item"><div class="spec-label">Age Rating</div><div class="spec-val">${p.age}</div></div>
+        <div class="spec-item"><div class="spec-label">Category</div><div class="spec-val">${p.cat.charAt(0).toUpperCase()+p.cat.slice(1)}</div></div>
+      </div>
+      <p class="pi-desc">${p.desc}</p>
+      <div class="qty-row">
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <input class="qty-val" id="qty-input" value="1" readonly>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+        <span style="font-size:0.75rem;color:var(--neon-green);font-weight:700;font-family:Orbitron,monospace;">● IN STOCK</span>
+      </div>
+      <div class="action-row">
+        <button class="btn btn-neon" style="flex:1;" onclick="addToCart(${p.id},'${p.name}');this.textContent='✅ Added!'">🛒 Add to Cart</button>
+        <button class="wishlist-btn" onclick="showToast('💗 Added to wishlist!')">♡ Wishlist</button>
+      </div>
+      <div class="tag-row">
+        <span class="tag">✈️ FREE SHIP</span>
+        <span class="tag">🔄 30-DAY RETURN</span>
+        <span class="tag">🎁 GIFT WRAP</span>
+        <span class="tag">#${p.cat}</span>
+      </div>
+    </div>
+  </div>
+  <div class="tabs-section">
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('desc',this)">DESCRIPTION</button>
+      <button class="tab-btn" onclick="switchTab('spec',this)">SPECS</button>
+      <button class="tab-btn" onclick="switchTab('reviews',this)">REVIEWS (${p.reviews})</button>
+      <button class="tab-btn" onclick="switchTab('ship',this)">SHIPPING</button>
+    </div>
+    <div id="tab-desc" class="tab-panel active"><p style="font-size:0.95rem;line-height:1.85;color:var(--muted);max-width:680px;">${p.desc} Each figure ships in a premium collector box with foam inserts, holographic authenticity sticker, and care booklet.</p></div>
+    <div id="tab-spec" class="tab-panel">
+      <div class="spec-grid" style="max-width:480px;">
+        <div class="spec-item"><div class="spec-label">Scale</div><div class="spec-val">${p.scale}</div></div>
+        <div class="spec-item"><div class="spec-label">Material</div><div class="spec-val">${p.material}</div></div>
+        <div class="spec-item"><div class="spec-label">Min Age</div><div class="spec-val">${p.age}</div></div>
+        <div class="spec-item"><div class="spec-label">Series</div><div class="spec-val">${p.series}</div></div>
+        <div class="spec-item"><div class="spec-label">Brand</div><div class="spec-val">AnimeBox Premium</div></div>
+        <div class="spec-item"><div class="spec-label">Origin</div><div class="spec-val">Japan / India</div></div>
+      </div>
+    </div>
+    <div id="tab-reviews" class="tab-panel">
+      ${reviews.map(r=>`<div class="review-card"><div class="review-top"><span class="reviewer">👤 ${r.name}</span><span class="review-date">${r.date}</span></div><div class="review-stars">${stars(r.stars)}</div><p class="review-text">${r.text}</p></div>`).join('')}
+    </div>
+    <div id="tab-ship" class="tab-panel">
+      <div class="spec-grid" style="max-width:560px;">
+        <div class="spec-item"><div class="spec-label">Standard</div><div class="spec-val">3–5 business days</div></div>
+        <div class="spec-item"><div class="spec-label">Express</div><div class="spec-val">1–2 business days</div></div>
+        <div class="spec-item"><div class="spec-label">Free Threshold</div><div class="spec-val">Orders above ₹1,999</div></div>
+        <div class="spec-item"><div class="spec-label">Returns</div><div class="spec-val">30 days hassle-free</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="related-section">
+    <div class="section-header"><div class="section-title">More from ${p.series.split(' ')[0]} <span class="glow-line"></span></div><a href="shop.html?cat=${p.cat}" class="see-all">See All →</a></div>
+    <div class="products-grid">${related.map(productCard).join('')}</div>
+  </div>`;
+  initReveal();
+});
+function changeQty(d){qty=Math.max(1,qty+d);document.getElementById('qty-input').value=qty;}
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
